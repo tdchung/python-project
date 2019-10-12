@@ -9,12 +9,13 @@
 /Test
 /Tools
 /docker
-/commonLib
+
 
 
 # no config file
 **/config.py
 
+**__pycache__
 **.pyc
 **.o
 
