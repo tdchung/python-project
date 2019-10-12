@@ -1,0 +1,3 @@
+
+
+MY_FIREBASE = "aHR0cHM6Ly9weXRob24tZmlyZWJhc2UtNGE4ZDIuZmlyZWJhc2Vpby5jb20v"
