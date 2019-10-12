@@ -12,7 +12,8 @@
 /commonLib
 
 
-
+# no config file
+*config.py
 
 **.pyc
 **.o
