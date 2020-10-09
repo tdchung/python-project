@@ -19,10 +19,6 @@ import subprocess
 import time
 import os
 
-from Test import *
-from MyImages import MyImages
-from lib_myPrint import MyPrint
-
 # user library
 # sys.path.append("../common_lib")
 
@@ -32,6 +28,12 @@ sys.path.append("{}/../common_lib".format(os.path.abspath(__file__).
 sys.path.append("{}/../User_lib".format(os.path.abspath(__file__).
                                         replace(os.path.basename(__file__), "")))
 
+try:
+    from Test import *
+    from MyImages import MyImages
+    from lib_myPrint import MyPrint
+except:
+    print("Import my print ERROR")
 
 # define class
 myPrint = MyPrint()
@@ -270,8 +272,8 @@ class MainFrame(wx.Frame):
         vbox.Add(wx.StaticLine(self.run_panel), 0, wx.ALL | wx.EXPAND, 0)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
         self.tCtrl1 = wx.TextCtrl(self.run_panel,
-                                  size=(self.default_with/3*2,
-                                        self.default_height),
+                                  size=(int(self.default_with/3*2),
+                                        int(self.default_height)),
                                   style=(wx.TE_MULTILINE | wx.TE_READONLY
                                          | wx.TE_RICH2 | wx.EXPAND))
         fgs = wx.FlexGridSizer(1, 1, 5, 5)
@@ -285,12 +287,12 @@ class MainFrame(wx.Frame):
         self.list_panel = wx.Panel(self.splitter)
         vbox_list = wx.BoxSizer(wx.VERTICAL)
         vbox_list.Add(wx.StaticLine(self.list_panel), 0, wx.ALL | wx.EXPAND, 0)
-        self.my_list_control = wx.ListCtrl(self.list_panel, size=(self.default_with/3, self.default_height),
+        self.my_list_control = wx.ListCtrl(self.list_panel, size=(int(self.default_with/3), int(self.default_height)),
                                            style=wx.LC_REPORT | wx.BORDER_SUNKEN
                                            | wx.LC_HRULES | wx.LC_VRULES | wx.EXPAND)
         for i in range(len(self.ListControlHeader)):
             self.my_list_control.InsertColumn(i, self.ListControlHeader[i],
-                                              width=self.default_with/3/2)
+                                              width=int(self.default_with/3/2))
         # add default from main app
         for i in range(len(self.test_list)):
             self.list_control_add_new([self.test_list[i], "NO RUN"])
@@ -360,7 +362,7 @@ class MainFrame(wx.Frame):
         if self.testThread:
             self.isPause = False
             self.testThread.stop()
-            safe_print("=======Stoped test==============")
+            safe_print("=======Stopped test==============")
             self.toolBar.EnableTool(self.id_pause, False)
             self.toolBar.EnableTool(self.id_play, True)
             self.toolBar.EnableTool(self.id_stop, False)

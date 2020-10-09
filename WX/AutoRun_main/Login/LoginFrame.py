@@ -18,10 +18,6 @@ import sys
 import re
 import os
 
-from lib_myFireBase import MyFireBase
-from lib_myPrint import MyPrint
-from MyImages import MyImages
-
 # user library
 # sys.path.append("../common_lib")
 sys.path.append("{}/../common_lib".format(os.path.abspath(__file__).
@@ -33,7 +29,16 @@ sys.path.append("{}/../Config".format(os.path.abspath(__file__).
                                       replace(os.path.basename(__file__), "")))
 
 try:
-    from config import *
+    from lib_myFireBase import MyFireBase
+    from lib_myPrint import MyPrint
+    from MyImages import MyImages
+except:
+    print("Import my print ERROR")
+
+try:
+    # from config import *
+    # TODO: the filebase token is in the config file
+    MY_FIREBASE = "base64data"
     if MY_FIREBASE is None:
         raise Exception
 except Exception:
@@ -254,8 +259,10 @@ class LoginFrame(wx.Frame):
         # fgs6.AddMany([(self.sText6_empty, 1, wx.ALIGN_BOTTOM),
         # (self.btn2, 1, wx.EXPAND), (self.btn3, 1, wx.EXPAND)])
         hbox6.Add(fgs6, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
+        # self.vbox_main.Add(hbox6,
+        #                    flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM, border=2)
         self.vbox_main.Add(hbox6,
-                           flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM, border=2)
+                           flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
         self.vbox_main.Add((-1, 5))
 
         # STATIC LINE
@@ -385,7 +392,7 @@ class LoginFrame(wx.Frame):
                           % (hashlib.sha256(self._user.lower().encode()).hexdigest(),
                              hashlib.sha256(self._password.encode()).hexdigest()))
             rsp = myFireBase.validateUser(self._user.lower(), self._password)
-            if rsp is 1:
+            if rsp == 1:
                 self.text_info.SetLabel("User or password correct")
                 myPrint.debug("DEBUG: login passed")
                 # Internal: check if Admin
@@ -397,10 +404,10 @@ class LoginFrame(wx.Frame):
                     self.Destroy()
                     self.MainApp.Show()
 
-            elif rsp is 0:
+            elif rsp == 0:
                 self.text_info.SetLabel("Password is incorrect")
                 myPrint.debug("DEBUG: login failed, Password is incorrect")
-            elif rsp is -1:
+            elif rsp == -1:
                 self.text_info.SetLabel("User is not existed")
                 myPrint.debug("DEBUG: login failed, User is not existed")
             else:

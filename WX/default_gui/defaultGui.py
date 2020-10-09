@@ -614,8 +614,9 @@ class MainFrame(wx.Frame):
         # gs.Add(self.cblistSelect, 0, wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM)
         # gs.Add(self.cblistResult, 0, wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM)
         hbox6.Add(gs, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
-        vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT |
-                 wx.TOP | wx.ALIGN_BOTTOM, border=2)
+        # vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT |
+        #          wx.TOP | wx.ALIGN_BOTTOM, border=2)
+        vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP , border=2)
         vbox.Add((-1, 5))
 
         hbox_comboBox = wx.BoxSizer(wx.HORIZONTAL)
@@ -639,8 +640,9 @@ class MainFrame(wx.Frame):
                         wx.ALIGN_BOTTOM | wx.EXPAND)
         hbox_comboBox.Add(gs_comboBox, proportion=1,
                           flag=wx.ALL | wx.EXPAND, border=2)
-        vbox.Add(hbox_comboBox, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP |
-                 wx.ALIGN_BOTTOM | wx.EXPAND, border=2)
+        # vbox.Add(hbox_comboBox, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP |
+        #          wx.ALIGN_BOTTOM | wx.EXPAND, border=2)
+        vbox.Add(hbox_comboBox, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.EXPAND, border=2)
         vbox.Add((-1, 5))
 
         hbox7 = wx.BoxSizer(wx.HORIZONTAL)
@@ -798,7 +800,7 @@ class MainFrame(wx.Frame):
                 self.MyPrint.debug(data[i])
             pass
         self.pre_logs()
-        if len(data) is 0:
+        if len(data) == 0:
             self.my_print_text("File is not available\n", MY_COLOR_RED)
             self.MyPrint.warn("File is not available")
         else:

@@ -50,4 +50,4 @@ It would be very helpful if you create self-contained minimal runnable example w
 
 for i in range(10):
     safe_print(string)
-    time.sleep(2)
+    time.sleep(0.5)

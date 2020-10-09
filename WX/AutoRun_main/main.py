@@ -5,13 +5,6 @@ import wx
 import sys
 import os
 
-from CommonApi import *
-from MainFrame import *
-from LoginFrame import *
-from lib_myFireBase import MyFireBase
-from lib_myPrint import MyPrint
-from MyImages import MyImages
-
 
 # user library
 # sys.path.append("common_lib")
@@ -33,6 +26,15 @@ sys.path.append(
     "{}/User_lib".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
 
 # safe_print("test")
+try:
+    from MyImages import MyImages
+    from lib_myPrint import MyPrint
+    from lib_myFireBase import MyFireBase
+    from LoginFrame import *
+    from MainFrame import *
+    from CommonApi import *
+except:
+    print("Import my print ERROR")
 
 
 class MyApp(wx.App):

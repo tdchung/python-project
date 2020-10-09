@@ -266,10 +266,10 @@ class MainFrame(wx.Frame):
         self.sText1.SetFont(font)
         self.sText_com = wx.StaticText(self.panel, label='  Ports:', size=(-1, 20))
         self.cbox_com_port = wx.ComboBox(self.panel,
-                                         choices=self.list_com,
-                                         value=self.list_com[-1],
-                                         size=(150, 25),)
-                                         # style=wx.CB_READONLY)
+                                        choices=self.list_com,
+                                        #  value=self.list_com[-1],
+                                        size=(150, 25),)
+                                        # style=wx.CB_READONLY)
         self.sText_baudrate = wx.StaticText(self.panel, label='  baudrate:', size=(-1, 20))
         self.cbox_baudrate = wx.ComboBox(self.panel,
                                          choices=self.baudrate,
@@ -317,7 +317,8 @@ class MainFrame(wx.Frame):
         gs.Add(self.btn_r1, 0, wx.EXPAND)
         gs.Add(self.btn_r2, 0, wx.EXPAND)
         hbox6.Add(gs, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
-        vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM, border=2)
+        # vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM, border=2)
+        vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP , border=2)
         vbox.Add((-1, 5))
 
 

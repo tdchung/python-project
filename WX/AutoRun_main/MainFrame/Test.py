@@ -11,13 +11,15 @@ from datetime import datetime
 import threading
 import random
 
-from CommonApi import *
 
 # user library
 # sys.path.append("../User_lib")
 sys.path.append("{}/../User_lib".format(os.path.abspath(__file__).
                                         replace(os.path.basename(__file__), "")))
-
+try:
+    from CommonApi import *
+except:
+    print("Import my print ERROR")
 
 # demo log
 # path = os.path.abspath(__file__).replace(__file__, "")

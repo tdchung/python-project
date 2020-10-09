@@ -24,8 +24,8 @@ import csv
 from collections import OrderedDict
 
 # user library
-sys.path.append("{}/../../commonLib".format(os.path.abspath(__file__).
-                                            replace(os.path.basename(__file__), "")))
+sys.path.append("{}/../../commonLib".format(os.path.abspath(
+    __file__).replace(os.path.basename(__file__), "")))
 
 try:
     from lib_myPrint import MyPrint
@@ -61,10 +61,10 @@ myPrint.debug("test print")
 version = '1.0'
 author = "tdchung.9@gmail.com"
 
-data_json_file = "{}/test_json.json".format(os.path.abspath(__file__).
-                                            replace(os.path.basename(__file__), ""))
-data_aut_file = "{}/test.aut".format(os.path.abspath(__file__).
-                                     replace(os.path.basename(__file__), ""))
+data_json_file = "{}/test_json.json".format(
+    os.path.abspath(__file__).replace(os.path.basename(__file__), ""))
+data_aut_file = "{}/test.aut".format(os.path.abspath(
+    __file__).replace(os.path.basename(__file__), ""))
 
 
 def handle_json_data(list_data_in):
@@ -163,8 +163,8 @@ class CsvHandler:
             writer = csv.DictWriter(outcsv, fieldnames=["Test Name", "Status"])
             writer.writeheader()
             for line in range(len(txt_data)):
-                writer.writerow({"Test Name": txt_data[line].split("\t")[0],
-                                 "Status": txt_data[line].split("\t")[1]})
+                writer.writerow({"Test Name": txt_data[line].split(
+                    "\t")[0], "Status": txt_data[line].split("\t")[1]})
 
     # ----------------------------------------------------------------------------------------------
     # read_csv_no_header
