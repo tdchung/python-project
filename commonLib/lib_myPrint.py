@@ -49,9 +49,9 @@ class MyPrint:
             #     # remove log debug
             #     pass
             # else:
-                # pass
-                with open(self.logFile, "a+") as myfile:
-                    myfile.write("%s\n" % mystr)
+            # pass
+            with open(self.logFile, "a+") as myfile:
+                myfile.write("%s\n" % mystr)
 
     def debug(self, *argv):
         self.my_print("--DEBUG--", *argv)

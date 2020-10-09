@@ -11,18 +11,18 @@ from datetime import datetime
 import threading
 import random
 
+from CommonApi import *
+
 # user library
 # sys.path.append("../User_lib")
 sys.path.append("{}/../User_lib".format(os.path.abspath(__file__).
-                                          replace(os.path.basename(__file__), "")))
-
-from CommonApi import *
-
+                                        replace(os.path.basename(__file__), "")))
 
 
 # demo log
 # path = os.path.abspath(__file__).replace(__file__, "")
-path = "{}/../logs/".format(os.path.abspath(__file__).replace(os.path.basename(__file__), ""))
+path = "{}/../logs/".format(os.path.abspath(
+    __file__).replace(os.path.basename(__file__), ""))
 log_path = "{}/logs/".format(path)
 
 
@@ -34,7 +34,8 @@ class GuiOnlyOutput:
             os.makedirs(log_path)
         self.log_file = "%s/%s.txt" % (log_path, log_name)
         filetimestamp = time.strftime("__%Y_%m_%d__%H_%M_%S", time.localtime())
-        self.log_file_timestamp = "%s/%s%s.txt" % (log_path, log_name, filetimestamp)
+        self.log_file_timestamp = "%s/%s%s.txt" % (
+            log_path, log_name, filetimestamp)
 
     def write(self, text):
         # TODO: add mutex or semaphore
@@ -157,6 +158,7 @@ class Thread(threading.Thread):
 class Test(Thread):
     "this class instanciates threads ; it shall be instanciated using start() and not run()"
     "run method will be executed automatically by Python"
+
     def __init__(self, list_test, test_output, is_gui=True):
         '''
         initial

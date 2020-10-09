@@ -1,5 +1,6 @@
-# 
+#
 from __future__ import print_function
+from lib_myPrint import MyPrint
 
 import os
 import sys
@@ -10,8 +11,6 @@ import mysql.connector
 # user lib
 ROOT = "{}/..".format(os.path.abspath(__file__).replace(os.path.basename(__file__), ""))
 sys.path.append("{}/commonLib".format(ROOT))
-
-from lib_myPrint import MyPrint
 
 
 #
@@ -29,9 +28,10 @@ except:
     DB = "MyDbName"
 
 
-
 # define print
-myPrint = MyPrint(saveLog=True, logFile="{}/Logs/test-mysql_lib.txt".format(ROOT))
+myPrint = MyPrint(
+    saveLog=True, logFile="{}/Logs/test-mysql_lib.txt".format(ROOT))
+
 
 class MySQLTma():
     def __init__(self,
@@ -83,7 +83,6 @@ class MySQLTma():
         sql_cmd = "CREATE DATABASE {}".format(database_name)
         return self.__db_execute_cmd_only(sql_cmd)
 
-
     def list_all_tables(self):
         sql_cmd = "SHOW TABLES"
         return self.__db_execute_cmd(sql_cmd)
@@ -91,17 +90,20 @@ class MySQLTma():
     def create_table(self, table_name, *argv):
         # argumets is tuple or array. (), []  ["column_name", lenght]
         # TODO: check input value
-        sql_cmd = "CREATE TABLE {}".format( table_name)
+        sql_cmd = "CREATE TABLE {}".format(table_name)
         if 1 == len(argv):
             sql_cmd += " (`{}` VARCHAR({}))".format(argv[0][0], argv[0][1])
         else:
             for i in range(len(argv)):
                 if 0 == i:
-                    sql_cmd += " (`{}` VARCHAR({}), ".format(argv[i][0], argv[i][1])
+                    sql_cmd += " (`{}` VARCHAR({}), ".format(
+                        argv[i][0], argv[i][1])
                 elif len(argv)-1 == i:
-                    sql_cmd += " `{}` VARCHAR({}))".format(argv[i][0], argv[i][1])
+                    sql_cmd += " `{}` VARCHAR({}))".format(
+                        argv[i][0], argv[i][1])
                 else:
-                    sql_cmd += " `{}` VARCHAR({}), ".format(argv[i][0], argv[i][1])
+                    sql_cmd += " `{}` VARCHAR({}), ".format(
+                        argv[i][0], argv[i][1])
         # myPrint.debug(sql_cmd)
         return self.__db_execute_cmd_only(sql_cmd)
 
@@ -138,7 +140,8 @@ class MySQLTma():
                 else:
                     column += "`{}`, ".format(argv[i][0])
                     value += "\"{}\",".format(argv[i][1])
-        sql_cmd = "INSERT INTO {} {} VALUES {}".format( table_name, column, value)
+        sql_cmd = "INSERT INTO {} {} VALUES {}".format(
+            table_name, column, value)
         # myPrint.debug(sql_cmd)
         return self.__db_execute_cmd_only(sql_cmd)
 
@@ -161,12 +164,12 @@ if __name__ == "__main__":
 
     if not mysqldb.check_table_existed("test_table"):
         mysqldb.create_table("test_table", ("test", 10),
-                                           ("dsadasdasd", 100),
-                                           ("dsadsssssasdasd", 10)
-                            )
-    mysqldb.insert_into_table("test_table", ("test", 124524),
-                                            ("dsadasdasd", "100"),
-                                            ("dsadsssssasdasd", "123")
+                             ("dsadasdasd", 100),
+                             ("dsadsssssasdasd", 10)
                              )
+    mysqldb.insert_into_table("test_table", ("test", 124524),
+                              ("dsadasdasd", "100"),
+                              ("dsadsssssasdasd", "123")
+                              )
     mysqldb.get_columns("test_table")
     mysqldb.delete_table("test_table")

@@ -19,6 +19,10 @@ import subprocess
 import time
 import os
 
+from Test import *
+from MyImages import MyImages
+from lib_myPrint import MyPrint
+
 # user library
 # sys.path.append("../common_lib")
 
@@ -26,13 +30,7 @@ sys.path.append("{}/../common_lib".format(os.path.abspath(__file__).
                                           replace(os.path.basename(__file__), "")))
 
 sys.path.append("{}/../User_lib".format(os.path.abspath(__file__).
-                                          replace(os.path.basename(__file__), "")))
-
-
-from lib_myPrint import MyPrint
-from MyImages import MyImages
-
-from  Test import *
+                                        replace(os.path.basename(__file__), "")))
 
 
 # define class
@@ -54,7 +52,8 @@ class MainFrame(wx.Frame):
         #                                 title=title,
         #                                 size=(self.default_with, self.default_height))
 
-        wx.Frame.__init__(self, None, title=title, size=(self.default_with, self.default_height))
+        wx.Frame.__init__(self, None, title=title, size=(
+            self.default_with, self.default_height))
 
         # define
         self.ListControlHeader = ["Test Name", "Status"]
@@ -99,11 +98,16 @@ class MainFrame(wx.Frame):
         windowm = wx.Menu()
 
         # list menu in file
-        itemNew = wx.MenuItem(filem, wx.ID_ANY, "New", wx.EmptyString, wx.ITEM_NORMAL)
-        itemOpen = wx.MenuItem(filem, wx.ID_ANY, "Open", wx.EmptyString, wx.ITEM_NORMAL)
-        itemSave = wx.MenuItem(filem, wx.ID_ANY, "Save", wx.EmptyString, wx.ITEM_NORMAL)
-        itemSaveAs = wx.MenuItem(filem, wx.ID_ANY, "Save As...", wx.EmptyString, wx.ITEM_NORMAL)
-        itemQuit = wx.MenuItem(filem, wx.ID_ANY, "Quit", wx.EmptyString, wx.ITEM_NORMAL)
+        itemNew = wx.MenuItem(filem, wx.ID_ANY, "New",
+                              wx.EmptyString, wx.ITEM_NORMAL)
+        itemOpen = wx.MenuItem(filem, wx.ID_ANY, "Open",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemSave = wx.MenuItem(filem, wx.ID_ANY, "Save",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemSaveAs = wx.MenuItem(
+            filem, wx.ID_ANY, "Save As...", wx.EmptyString, wx.ITEM_NORMAL)
+        itemQuit = wx.MenuItem(filem, wx.ID_ANY, "Quit",
+                               wx.EmptyString, wx.ITEM_NORMAL)
         filem.Append(itemNew)
         filem.Append(itemOpen)
         filem.AppendSeparator()
@@ -113,13 +117,20 @@ class MainFrame(wx.Frame):
         filem.Append(itemQuit)
 
         # list menu in edit
-        itemUndo = wx.MenuItem(editm, wx.ID_ANY, "Undo", wx.EmptyString, wx.ITEM_NORMAL)
-        itemRedo = wx.MenuItem(editm, wx.ID_ANY, "Redo", wx.EmptyString, wx.ITEM_NORMAL)
-        itemCut = wx.MenuItem(editm, wx.ID_ANY, "Cut", wx.EmptyString, wx.ITEM_NORMAL)
-        itemCopy = wx.MenuItem(editm, wx.ID_ANY, "Copy", wx.EmptyString, wx.ITEM_NORMAL)
-        itemPaste = wx.MenuItem(editm, wx.ID_ANY, "Paste", wx.EmptyString, wx.ITEM_NORMAL)
-        itemDelete = wx.MenuItem(editm, wx.ID_ANY, "Delete", wx.EmptyString, wx.ITEM_NORMAL)
-        itemSelectAll = wx.MenuItem(editm, wx.ID_ANY, "Select All", wx.EmptyString, wx.ITEM_NORMAL)
+        itemUndo = wx.MenuItem(editm, wx.ID_ANY, "Undo",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemRedo = wx.MenuItem(editm, wx.ID_ANY, "Redo",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemCut = wx.MenuItem(editm, wx.ID_ANY, "Cut",
+                              wx.EmptyString, wx.ITEM_NORMAL)
+        itemCopy = wx.MenuItem(editm, wx.ID_ANY, "Copy",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemPaste = wx.MenuItem(editm, wx.ID_ANY, "Paste",
+                                wx.EmptyString, wx.ITEM_NORMAL)
+        itemDelete = wx.MenuItem(
+            editm, wx.ID_ANY, "Delete", wx.EmptyString, wx.ITEM_NORMAL)
+        itemSelectAll = wx.MenuItem(
+            editm, wx.ID_ANY, "Select All", wx.EmptyString, wx.ITEM_NORMAL)
         editm.Append(itemUndo)
         editm.Append(itemRedo)
         editm.AppendSeparator()
@@ -130,13 +141,16 @@ class MainFrame(wx.Frame):
         editm.Append(itemSelectAll)
 
         # list all menu in options
-        itemMoreOptions = wx.MenuItem(optionm, wx.ID_ANY, "More Options", wx.EmptyString, wx.ITEM_NORMAL)
-        itemHelp = wx.MenuItem(optionm, wx.ID_ANY, "Help", wx.EmptyString, wx.ITEM_NORMAL)
+        itemMoreOptions = wx.MenuItem(
+            optionm, wx.ID_ANY, "More Options", wx.EmptyString, wx.ITEM_NORMAL)
+        itemHelp = wx.MenuItem(optionm, wx.ID_ANY, "Help",
+                               wx.EmptyString, wx.ITEM_NORMAL)
         optionm.Append(itemMoreOptions)
         optionm.Append(itemHelp)
 
         # list all menu in window
-        itemWindows = wx.MenuItem(windowm, wx.ID_ANY, "Windows...", wx.EmptyString, wx.ITEM_NORMAL)
+        itemWindows = wx.MenuItem(
+            windowm, wx.ID_ANY, "Windows...", wx.EmptyString, wx.ITEM_NORMAL)
         windowm.Append(itemWindows)
 
         # show menu
@@ -164,15 +178,16 @@ class MainFrame(wx.Frame):
         icon = self.images.getIconNew()
         icon_stream = io.BytesIO(icon)
         toolNew = self.toolBar.AddTool(wx.ID_ANY, "New",
-                                  bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                  shortHelp="New")
+                                       bitmap=wx.Bitmap(wx.Image(icon_stream)),
+                                       shortHelp="New")
         icon_stream.close()
         # self.toolBar.AddSeparator()
         icon = self.images.getIconSave()
         icon_stream = io.BytesIO(icon)
         toolSave = self.toolBar.AddTool(wx.ID_ANY, "Save",
-                                   bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                   shortHelp="Save")
+                                        bitmap=wx.Bitmap(
+                                            wx.Image(icon_stream)),
+                                        shortHelp="Save")
         icon_stream.close()
 
         self.toolBar.AddSeparator()
@@ -182,22 +197,24 @@ class MainFrame(wx.Frame):
         icon = self.images.getIconPlay()
         icon_stream = io.BytesIO(icon)
         toolRun = self.toolBar.AddTool(self.id_play, "Run",
-                                  bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                  shortHelp="Run")
+                                       bitmap=wx.Bitmap(wx.Image(icon_stream)),
+                                       shortHelp="Run")
         icon_stream.close()
         # self.toolBar.AddSeparator()
         icon = self.images.getIconPause()
         icon_stream = io.BytesIO(icon)
         toolPause = self.toolBar.AddTool(self.id_pause, "Pause",
-                                  bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                  shortHelp="Pause")
+                                         bitmap=wx.Bitmap(
+                                             wx.Image(icon_stream)),
+                                         shortHelp="Pause")
         icon_stream.close()
         # self.toolBar.AddSeparator()
         icon = self.images.getIconStop()
         icon_stream = io.BytesIO(icon)
         toolStop = self.toolBar.AddTool(self.id_stop, "Stop",
-                                   bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                   shortHelp="Stop")
+                                        bitmap=wx.Bitmap(
+                                            wx.Image(icon_stream)),
+                                        shortHelp="Stop")
 
         self.toolBar.AddSeparator()
         self.toolBar.AddSeparator()
@@ -206,22 +223,25 @@ class MainFrame(wx.Frame):
         icon = self.images.getIconClear()
         icon_stream = io.BytesIO(icon)
         toolClear = self.toolBar.AddTool(wx.ID_ANY, "Save",
-                                    bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                    shortHelp="Clear Logs")
+                                         bitmap=wx.Bitmap(
+                                             wx.Image(icon_stream)),
+                                         shortHelp="Clear Logs")
         icon_stream.close()
         # self.toolBar.AddSeparator()
         icon = self.images.getIconHelp()
         icon_stream = io.BytesIO(icon)
         toolHelp = self.toolBar.AddTool(wx.ID_ANY, "Help",
-                                   bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                   shortHelp="Help")
+                                        bitmap=wx.Bitmap(
+                                            wx.Image(icon_stream)),
+                                        shortHelp="Help")
         icon_stream.close()
         # self.toolBar.AddSeparator()
         icon = self.images.getIconQuit()
         icon_stream = io.BytesIO(icon)
         toolQuit = self.toolBar.AddTool(wx.ID_ANY, "Quit",
-                                   bitmap=wx.Bitmap(wx.Image(icon_stream)),
-                                   shortHelp="Quit")
+                                        bitmap=wx.Bitmap(
+                                            wx.Image(icon_stream)),
+                                        shortHelp="Quit")
         icon_stream.close()
         del icon, icon_stream
 
@@ -242,14 +262,16 @@ class MainFrame(wx.Frame):
 
     def main_panel_init(self):
 
-        self.splitter = wx.SplitterWindow(self, -1, style=wx.CLIP_CHILDREN | wx.SP_LIVE_UPDATE | wx.SP_3D)
-    
+        self.splitter = wx.SplitterWindow(
+            self, -1, style=wx.CLIP_CHILDREN | wx.SP_LIVE_UPDATE | wx.SP_3D)
+
         self.run_panel = wx.Panel(self.splitter)
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(wx.StaticLine(self.run_panel), 0, wx.ALL | wx.EXPAND, 0)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
         self.tCtrl1 = wx.TextCtrl(self.run_panel,
-                                  size=(self.default_with/3*2, self.default_height),
+                                  size=(self.default_with/3*2,
+                                        self.default_height),
                                   style=(wx.TE_MULTILINE | wx.TE_READONLY
                                          | wx.TE_RICH2 | wx.EXPAND))
         fgs = wx.FlexGridSizer(1, 1, 5, 5)
@@ -260,13 +282,12 @@ class MainFrame(wx.Frame):
         vbox.Add((-1, 5))
         self.run_panel.SetSizer(vbox)
 
-
         self.list_panel = wx.Panel(self.splitter)
         vbox_list = wx.BoxSizer(wx.VERTICAL)
         vbox_list.Add(wx.StaticLine(self.list_panel), 0, wx.ALL | wx.EXPAND, 0)
         self.my_list_control = wx.ListCtrl(self.list_panel, size=(self.default_with/3, self.default_height),
                                            style=wx.LC_REPORT | wx.BORDER_SUNKEN
-                                                 | wx.LC_HRULES | wx.LC_VRULES | wx.EXPAND)
+                                           | wx.LC_HRULES | wx.LC_VRULES | wx.EXPAND)
         for i in range(len(self.ListControlHeader)):
             self.my_list_control.InsertColumn(i, self.ListControlHeader[i],
                                               width=self.default_with/3/2)
@@ -276,18 +297,18 @@ class MainFrame(wx.Frame):
         fgs2 = wx.FlexGridSizer(1, 1, 5, 5)
         fgs2.Add(self.my_list_control, 1, wx.ALIGN_TOP | wx.EXPAND)
         fgs2.AddGrowableCol(0, 0)
-        vbox_list.Add(fgs2, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
+        vbox_list.Add(fgs2, flag=wx.EXPAND | wx.LEFT |
+                      wx.RIGHT | wx.TOP, border=2)
         vbox_list.Add((-1, 5))
         self.list_panel.SetSizer(vbox_list)
 
-        # Set splitter 
+        # Set splitter
         self.splitter.SplitVertically(self.list_panel, self.run_panel, 320)
         self.splitter.SetMinimumPaneSize(200)
 
         # self.Bind(wx.EVT_BUTTON, self.btn1_event, self.btn1)
         # self.Bind(wx.EVT_BUTTON, self.btn2_event, self.btn2)
         # self.Bind(wx.EVT_BUTTON, self.btn3_event, self.btn3)
-
 
     def list_control_add_new(self, data):
         '''
@@ -297,9 +318,11 @@ class MainFrame(wx.Frame):
         # TODO: test here
         self.my_list_control.Append(data)
         if self.item_index % 2:
-            self.my_list_control.SetItemBackgroundColour(self.item_index, "white")
+            self.my_list_control.SetItemBackgroundColour(
+                self.item_index, "white")
         else:
-            self.my_list_control.SetItemBackgroundColour(self.item_index, "gray")
+            self.my_list_control.SetItemBackgroundColour(
+                self.item_index, "gray")
         self.item_index += 1
 
     # --- Even ---
@@ -365,7 +388,8 @@ class MainFrame(wx.Frame):
             return 0
 
     def btn1_event(self, evt):
-        dlg = wx.DirDialog(self, "Choose a directory:", style=wx.DD_DEFAULT_STYLE)
+        dlg = wx.DirDialog(self, "Choose a directory:",
+                           style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             pass
         dlg.Destroy()

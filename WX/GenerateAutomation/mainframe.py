@@ -33,7 +33,6 @@ try:
 except:
     print("Import my print ERROR")
 
-
     class MyPrint():
         def __init__(self, logLevel=""):
             pass
@@ -127,7 +126,8 @@ class CsvHandler:
             txt_data = f.read().splitlines()  # get a list a line
         # print(txt_data)
         with open(csv_file_output, "wb") as csvfile:
-            filewriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+            filewriter = csv.writer(
+                csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for line in range(len(txt_data)):
                 filewriter.writerow(txt_data[line].split("\t"))
 
@@ -144,7 +144,8 @@ class CsvHandler:
         """
         # print(data_input)
         with open(csv_file_output, "wb") as csvfile:
-            filewriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+            filewriter = csv.writer(
+                csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
             for line in range(len(data_input)):
                 filewriter.writerow(data_input[line].split("\t"))
 
@@ -225,7 +226,8 @@ class CsvHandler:
                         # #     data_line = "%s\t%s" % (match.group(3), result)
                         # # print(data_line)
                         # data.append(data_line)
-                        data.append((match.group(1), match.group(2), result, match.group(3)))
+                        data.append(
+                            (match.group(1), match.group(2), result, match.group(3)))
         except Exception as e:
             data = []
 
@@ -280,7 +282,8 @@ class LetpJson():
                     # test case is found
                     ref = re.search(re_info, line)
                     if ref is not None:
-                        myPrint.debug("     {}    {}    {}".format(line, type(line), ref.group(1)))
+                        myPrint.debug("     {}    {}    {}".format(
+                            line, type(line), ref.group(1)))
                         # update here
                         list_tests_name.append(ref.group(1))
                         list_tests_json.append(line)
@@ -302,7 +305,8 @@ class MainFrame(wx.Frame):
         # title=title,
         # size=(self.default_with, self.default_height))
 
-        wx.Frame.__init__(self, None, title=title, size=(self.default_with, self.default_height))
+        wx.Frame.__init__(self, None, title=title, size=(
+            self.default_with, self.default_height))
 
         # define
         self.ListControlHeader = ["Test Name", "Status"]
@@ -359,11 +363,16 @@ class MainFrame(wx.Frame):
         windowm = wx.Menu()
 
         # list menu in file
-        itemNew = wx.MenuItem(filem, wx.ID_ANY, "New", wx.EmptyString, wx.ITEM_NORMAL)
-        itemOpen = wx.MenuItem(filem, wx.ID_ANY, "Open", wx.EmptyString, wx.ITEM_NORMAL)
-        itemSave = wx.MenuItem(filem, wx.ID_ANY, "Save", wx.EmptyString, wx.ITEM_NORMAL)
-        itemSaveAs = wx.MenuItem(filem, wx.ID_ANY, "Save As...", wx.EmptyString, wx.ITEM_NORMAL)
-        itemQuit = wx.MenuItem(filem, wx.ID_ANY, "Quit", wx.EmptyString, wx.ITEM_NORMAL)
+        itemNew = wx.MenuItem(filem, wx.ID_ANY, "New",
+                              wx.EmptyString, wx.ITEM_NORMAL)
+        itemOpen = wx.MenuItem(filem, wx.ID_ANY, "Open",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemSave = wx.MenuItem(filem, wx.ID_ANY, "Save",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemSaveAs = wx.MenuItem(
+            filem, wx.ID_ANY, "Save As...", wx.EmptyString, wx.ITEM_NORMAL)
+        itemQuit = wx.MenuItem(filem, wx.ID_ANY, "Quit",
+                               wx.EmptyString, wx.ITEM_NORMAL)
         filem.Append(itemNew)
         filem.Append(itemOpen)
         filem.AppendSeparator()
@@ -373,13 +382,20 @@ class MainFrame(wx.Frame):
         filem.Append(itemQuit)
 
         # list menu in edit
-        itemUndo = wx.MenuItem(editm, wx.ID_ANY, "Undo", wx.EmptyString, wx.ITEM_NORMAL)
-        itemRedo = wx.MenuItem(editm, wx.ID_ANY, "Redo", wx.EmptyString, wx.ITEM_NORMAL)
-        itemCut = wx.MenuItem(editm, wx.ID_ANY, "Cut", wx.EmptyString, wx.ITEM_NORMAL)
-        itemCopy = wx.MenuItem(editm, wx.ID_ANY, "Copy", wx.EmptyString, wx.ITEM_NORMAL)
-        itemPaste = wx.MenuItem(editm, wx.ID_ANY, "Paste", wx.EmptyString, wx.ITEM_NORMAL)
-        itemDelete = wx.MenuItem(editm, wx.ID_ANY, "Delete", wx.EmptyString, wx.ITEM_NORMAL)
-        itemSelectAll = wx.MenuItem(editm, wx.ID_ANY, "Select All", wx.EmptyString, wx.ITEM_NORMAL)
+        itemUndo = wx.MenuItem(editm, wx.ID_ANY, "Undo",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemRedo = wx.MenuItem(editm, wx.ID_ANY, "Redo",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemCut = wx.MenuItem(editm, wx.ID_ANY, "Cut",
+                              wx.EmptyString, wx.ITEM_NORMAL)
+        itemCopy = wx.MenuItem(editm, wx.ID_ANY, "Copy",
+                               wx.EmptyString, wx.ITEM_NORMAL)
+        itemPaste = wx.MenuItem(editm, wx.ID_ANY, "Paste",
+                                wx.EmptyString, wx.ITEM_NORMAL)
+        itemDelete = wx.MenuItem(
+            editm, wx.ID_ANY, "Delete", wx.EmptyString, wx.ITEM_NORMAL)
+        itemSelectAll = wx.MenuItem(
+            editm, wx.ID_ANY, "Select All", wx.EmptyString, wx.ITEM_NORMAL)
         editm.Append(itemUndo)
         editm.Append(itemRedo)
         editm.AppendSeparator()
@@ -392,12 +408,14 @@ class MainFrame(wx.Frame):
         # list all menu in options
         itemMoreOptions = wx.MenuItem(optionm, wx.ID_ANY, "More Options",
                                       wx.EmptyString, wx.ITEM_NORMAL)
-        itemHelp = wx.MenuItem(optionm, wx.ID_ANY, "Help", wx.EmptyString, wx.ITEM_NORMAL)
+        itemHelp = wx.MenuItem(optionm, wx.ID_ANY, "Help",
+                               wx.EmptyString, wx.ITEM_NORMAL)
         optionm.Append(itemMoreOptions)
         optionm.Append(itemHelp)
 
         # list all menu in window
-        itemWindows = wx.MenuItem(windowm, wx.ID_ANY, "Windows...", wx.EmptyString, wx.ITEM_NORMAL)
+        itemWindows = wx.MenuItem(
+            windowm, wx.ID_ANY, "Windows...", wx.EmptyString, wx.ITEM_NORMAL)
         windowm.Append(itemWindows)
 
         # show menu
@@ -489,30 +507,36 @@ class MainFrame(wx.Frame):
         self.tCtrl_path = wx.ComboBox(self.main_panel, id=-1, value=self.my_paths[0],
                                       style=wx.TE_RICH2 | wx.EXPAND,
                                       choices=self.my_paths)
-        self.openfile_button = wx.Button(self.main_panel, label='...', size=(40, 27))
+        self.openfile_button = wx.Button(
+            self.main_panel, label='...', size=(40, 27))
         self.framework_type_data = ["Atlas", "LeTP", "reserved"]
         self.framework_type = wx.ComboBox(self.main_panel, id=-1, value=self.framework_type_data[0],
                                           style=wx.CB_READONLY,
                                           choices=self.framework_type_data)
-        self.result_button = wx.Button(self.main_panel, label='Get result', size=(140, 30))
-        hbox_result.Add(wx.StaticText(self.main_panel, label="Path:", name="."), 1, wx.ALIGN_CENTER)
+        self.result_button = wx.Button(
+            self.main_panel, label='Get result', size=(140, 30))
+        hbox_result.Add(wx.StaticText(self.main_panel,
+                                      label="Path:", name="."), 1, wx.ALIGN_CENTER)
         hbox_result.Add(self.tCtrl_path, wx.ALL | wx.EXPAND, 10)
         hbox_result.Add(self.openfile_button, wx.ALL | wx.BOTTOM, 10)
         hbox_result.AddSpacer((100))
         hbox_result.Add(self.framework_type, wx.ALL, 10)
         hbox_result.Add(self.result_button, wx.ALL, 10)
-        vbox.Add(hbox_result, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
+        vbox.Add(hbox_result, flag=wx.EXPAND |
+                 wx.LEFT | wx.RIGHT | wx.TOP, border=2)
         # End 2019-11-08
 
         vbox.Add(wx.StaticLine(self.main_panel), 0, wx.ALL | wx.EXPAND, 0)
         # test = wx.StaticText(self.main_panel, label="Logs:", name="..")
         vbox.AddSpacer((20))
         my_label = "Ver: {}                Author: {}".format(version, author)
-        vbox.Add(wx.StaticText(self.main_panel, label=my_label, name=".."), 0, wx.ALIGN_RIGHT)
+        vbox.Add(wx.StaticText(self.main_panel,
+                               label=my_label, name=".."), 0, wx.ALIGN_RIGHT)
         vbox.Add(wx.StaticLine(self.main_panel), 0, wx.ALL | wx.EXPAND, 0)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
         self.tCtrl1 = wx.TextCtrl(self.main_panel,
-                                  size=(self.default_with / 4 * 3, self.default_height * 2),
+                                  size=(self.default_with / 4 * 3,
+                                        self.default_height * 2),
                                   style=(wx.TE_MULTILINE | wx.TE_READONLY
                                          | wx.TE_RICH2 | wx.EXPAND))
         fgs = wx.FlexGridSizer(1, 1, 5, 5)
@@ -528,15 +552,18 @@ class MainFrame(wx.Frame):
         vbox_list = wx.BoxSizer(wx.VERTICAL)
         vbox_list.Add(wx.StaticLine(self.left_panel), 0, wx.ALL | wx.EXPAND, 0)
 
-        self.static_box = wx.StaticBox(self.left_panel, id=-1, label="Infomation")
-        self.static_box_sizer = wx.StaticBoxSizer(self.static_box, orient=wx.HORIZONTAL)
+        self.static_box = wx.StaticBox(
+            self.left_panel, id=-1, label="Infomation")
+        self.static_box_sizer = wx.StaticBoxSizer(
+            self.static_box, orient=wx.HORIZONTAL)
         # self.btn1 = wx.Button(self.left_panel, label='btn1 ...', size=(140, 30))
 
         self.aut_data = [".aut", ".json", ".sh", "reserved"]
         self.aut_type = wx.ComboBox(self.left_panel, id=-1, value=self.aut_data[0],
                                     style=wx.CB_READONLY,
                                     choices=self.aut_data)
-        self.generate = wx.Button(self.left_panel, label='GEN ...', size=(140, 30))
+        self.generate = wx.Button(
+            self.left_panel, label='GEN ...', size=(140, 30))
         # self.static_box_sizer.Add(self.btn1, wx.ALL | wx.EXPAND, 10)
         self.static_box_sizer.Add(self.aut_type, wx.ALL | wx.EXPAND, 10)
         self.static_box_sizer.AddSpacer((30))
@@ -547,7 +574,8 @@ class MainFrame(wx.Frame):
                                           size=(self.default_with / 4, 1000),
                                           style=(wx.TE_MULTILINE | wx.TE_RICH2))
 
-        self.clear_left = wx.Button(self.left_panel, label='clear', size=(140, 30))
+        self.clear_left = wx.Button(
+            self.left_panel, label='clear', size=(140, 30))
 
         fgs2 = wx.FlexGridSizer(4, 1, 5, 5)
         fgs2.Add(self.static_box_sizer, 0, 0)
@@ -557,7 +585,8 @@ class MainFrame(wx.Frame):
         fgs2.Add(self.test_name_ctrl, 1, wx.ALIGN_TOP | wx.EXPAND)
         fgs2.Add(self.clear_left, 1, wx.ALIGN_BOTTOM | wx.ALIGN_RIGHT)
         fgs2.AddGrowableRow(3)
-        vbox_list.Add(fgs2, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
+        vbox_list.Add(fgs2, flag=wx.EXPAND | wx.LEFT |
+                      wx.RIGHT | wx.TOP, border=2)
         vbox_list.Add((-1, 5))
         self.left_panel.SetSizer(vbox_list)
 
@@ -581,9 +610,11 @@ class MainFrame(wx.Frame):
         # TODO: test here
         self.my_list_control.Append(data)
         if self.item_index % 2:
-            self.my_list_control.SetItemBackgroundColour(self.item_index, "white")
+            self.my_list_control.SetItemBackgroundColour(
+                self.item_index, "white")
         else:
-            self.my_list_control.SetItemBackgroundColour(self.item_index, "gray")
+            self.my_list_control.SetItemBackgroundColour(
+                self.item_index, "gray")
         self.item_index += 1
 
     # --- Even ---
@@ -683,13 +714,16 @@ class MainFrame(wx.Frame):
                                 # print(testre)
                                 if testre is not None:
                                     myPrint.debug("    --->{} {} {}".format(testre.group(1),
-                                                                            testre.group(2),
+                                                                            testre.group(
+                                                                                2),
                                                                             testre.group(3)))
                                     date = "{}-{}-{}".format(out_re.group(1)[0:4],
-                                                             out_re.group(1)[4:6],
+                                                             out_re.group(
+                                                                 1)[4:6],
                                                              out_re.group(1)[6:])
                                     time = "{}-{}-{}".format(out_re.group(2)[0:2],
-                                                             out_re.group(2)[2:4],
+                                                             out_re.group(
+                                                                 2)[2:4],
                                                              out_re.group(2)[4:])
                                     data.append((date, time, testre.group(1),
                                                  testre.group(3), testre.group(2)))
@@ -716,19 +750,24 @@ class MainFrame(wx.Frame):
             for i in data:
                 if i[2] == "PASSED":
                     self.tCtrl1.SetDefaultStyle(wx.TextAttr(MY_COLOR_BLUE))
-                    self.tCtrl1.AppendText("{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], i[2]))
+                    self.tCtrl1.AppendText(
+                        "{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], i[2]))
                 elif i[2] == "FAIL":
                     self.tCtrl1.SetDefaultStyle(wx.TextAttr(MY_COLOR_RED))
-                    self.tCtrl1.AppendText("{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], "FAILED"))
+                    self.tCtrl1.AppendText(
+                        "{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], "FAILED"))
                 elif i[2] == "N/A":
                     self.tCtrl1.SetDefaultStyle(wx.TextAttr(MY_COLOR_VIOLET))
-                    self.tCtrl1.AppendText("{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], i[2]))
+                    self.tCtrl1.AppendText(
+                        "{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], i[2]))
                 else:
                     self.tCtrl1.SetDefaultStyle(wx.TextAttr(MY_COLOR_BLACK))
-                    self.tCtrl1.AppendText("{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], i[2]))
+                    self.tCtrl1.AppendText(
+                        "{}\t{}\t{}\t{}\n".format(i[0], i[1], i[3], i[2]))
 
     def btn1_event(self, evt):
-        dlg = wx.DirDialog(self, "Choose a directory:", style=wx.DD_DEFAULT_STYLE)
+        dlg = wx.DirDialog(self, "Choose a directory:",
+                           style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             pass
         dlg.Destroy()
@@ -788,7 +827,8 @@ class MainFrame(wx.Frame):
                 self.tCtrl1.AppendText("None")
             else:
                 self.tCtrl1.SetDefaultStyle(wx.TextAttr(MY_COLOR_BLUE))
-                self.tCtrl1.AppendText('<?xml version="1.0" encoding="utf-8"?>\n')
+                self.tCtrl1.AppendText(
+                    '<?xml version="1.0" encoding="utf-8"?>\n')
                 self.tCtrl1.AppendText('<tokens>\n')
                 for data_line in data:
                     self.tCtrl1.AppendText("{}\n".format(data_line))
@@ -809,7 +849,8 @@ class MainFrame(wx.Frame):
                 # clean folder
                 self.tCtrl1.AppendText('rm -r *.update; rm -r _*\n')
                 for data_line in data:
-                    self.tCtrl1.AppendText("letp -o run {} -r fp\n".format(data_line.split('"')[3]))
+                    self.tCtrl1.AppendText(
+                        "letp -o run {} -r fp\n".format(data_line.split('"')[3]))
 
         else:
             pass

@@ -18,11 +18,14 @@ try:
     from lib_myPrint import MyPrint
 except:
     print("Import my print ERROR")
+
     class MyPrint():
         def __init__(self, logLevel=""):
             pass
+
         def debug(self, string):
             print(string)
+
         def error(self, string):
             print(string)
 
@@ -30,6 +33,7 @@ except:
 myPrint = MyPrint(logLevel="debug")
 
 IDontWantTestNow = False
+
 
 class MyFireBase():
     def __init__(self, url=u'', isBase64=False):
@@ -59,7 +63,7 @@ class MyFireBase():
             myPrint.error("User not exist")
             return -1
         try:
-            # 
+            #
             from firebase import firebase
         except Exception as e:
             myPrint.info("Validate import exception: %s" % str(e))
@@ -137,7 +141,8 @@ class MyFireBase():
         myPrint.debug(email)
         myPrint.debug(user_en)
         myPrint.debug(pw_en)
-        data = {"name": user_en, "password": pw_en, "user_str": user, "email": email}
+        data = {"name": user_en, "password": pw_en,
+                "user_str": user, "email": email}
         data = json.dumps(data)
         myPrint.debug(data)
         if IDontWantTestNow:
@@ -177,7 +182,7 @@ class MyFireBase():
             # TODO: return old password is not corrected
             return -1
         # TODO: get name id, then update Password
-        return 1 # or 0 in case cannot put
+        return 1  # or 0 in case cannot put
 
     def removeUser(self, user=u''):
         """
@@ -196,4 +201,3 @@ if __name__ == '__main__':
     MyFireBase = MyFireBase()
     MyFireBase.isUserExisted("")
     pass
-    

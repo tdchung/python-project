@@ -8,6 +8,8 @@
 from __future__ import print_function
 
 # internal function to get data images
+
+
 def _print_data_image(image_path):
     with open(image_path, 'rb') as f:
         print(f.read())

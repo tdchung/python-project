@@ -5,36 +5,39 @@ import wx
 import sys
 import os
 
+from CommonApi import *
+from MainFrame import *
+from LoginFrame import *
+from lib_myFireBase import MyFireBase
+from lib_myPrint import MyPrint
+from MyImages import MyImages
+
+
 # user library
 # sys.path.append("common_lib")
 # sys.path.append("Login")
 # sys.path.append("MainFrame")
 
 # user library
-sys.path.append("{}/common_lib".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
-sys.path.append("{}/Login".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
-sys.path.append("{}/MainFrame".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
+sys.path.append(
+    "{}/common_lib".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
+sys.path.append(
+    "{}/Login".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
+sys.path.append(
+    "{}/MainFrame".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
 
-
-from MyImages import MyImages
-from lib_myPrint import MyPrint
-from lib_myFireBase import MyFireBase
-
-from LoginFrame import *
-from MainFrame import *
 
 # add common lib
 # sys.path.append("User_lib")
-sys.path.append("{}/User_lib".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
+sys.path.append(
+    "{}/User_lib".format(os.path.abspath(__file__).replace(os.path.basename(__file__), "")))
 
-from CommonApi import *
 # safe_print("test")
 
 
 class MyApp(wx.App):
 
     def OnInit(self):
-
         '''
         :return:
         '''
