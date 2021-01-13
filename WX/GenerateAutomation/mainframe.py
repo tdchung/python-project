@@ -535,8 +535,8 @@ class MainFrame(wx.Frame):
         vbox.Add(wx.StaticLine(self.main_panel), 0, wx.ALL | wx.EXPAND, 0)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
         self.tCtrl1 = wx.TextCtrl(self.main_panel,
-                                  size=(self.default_with / 4 * 3,
-                                        self.default_height * 2),
+                                  size=(int(self.default_with / 4 * 3),
+                                        int(self.default_height * 2)),
                                   style=(wx.TE_MULTILINE | wx.TE_READONLY
                                          | wx.TE_RICH2 | wx.EXPAND))
         fgs = wx.FlexGridSizer(1, 1, 5, 5)
@@ -571,7 +571,8 @@ class MainFrame(wx.Frame):
 
         self.test_name_ctrl = wx.TextCtrl(self.left_panel,
                                           # TODO: will update height of this field. auto size
-                                          size=(self.default_with / 4, 1000),
+                                          size=(
+                                              int(self.default_with / 4), 1000),
                                           style=(wx.TE_MULTILINE | wx.TE_RICH2))
 
         self.clear_left = wx.Button(
@@ -657,7 +658,7 @@ class MainFrame(wx.Frame):
 
     def openfile_btn_event(self, evt):
         # If Atlas framework
-        if self.framework_type.GetSelection() is 0:
+        if self.framework_type.GetSelection() == 0:
             with wx.FileDialog(self, "Open txt file",
                                wildcard="Excel files (*.txt)|*.txt|All file (*.*)|*.*",
                                style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
@@ -669,7 +670,7 @@ class MainFrame(wx.Frame):
                 self.tCtrl_path.Append("ATLAS  {}".format(str(pathname)))
                 self.tCtrl_path.SetSelection(self.tCtrl_path.GetCount() - 1)
         # LeTP framework
-        elif self.framework_type.GetSelection() is 1:
+        elif self.framework_type.GetSelection() == 1:
             with wx.DirDialog(self, "Choose a directory:", style=wx.DD_DEFAULT_STYLE) as dirDialog:
                 if dirDialog.ShowModal() == wx.ID_CANCEL:
                     return  # the user changed their mind
@@ -800,7 +801,7 @@ class MainFrame(wx.Frame):
         self.tCtrl1.Clear()
 
         # generate the .json file to run in LeTP framework
-        if self.aut_type.GetSelection() is 1:
+        if self.aut_type.GetSelection() == 1:
             data = handle_json_data(my_data_in)
             myPrint.debug(data)
             if data == []:
@@ -820,7 +821,7 @@ class MainFrame(wx.Frame):
                 self.tCtrl1.AppendText(']\n')
 
         # generate .aut file test run with Atlas framework
-        elif self.aut_type.GetSelection() is 0:
+        elif self.aut_type.GetSelection() == 0:
             data = handle_aut_data(my_data_in)
             myPrint.debug(data)
             if data == []:
@@ -835,7 +836,7 @@ class MainFrame(wx.Frame):
                 self.tCtrl1.AppendText('</tokens>\n')
 
         # generate bash script to test with letp
-        elif self.aut_type.GetSelection() is 2:
+        elif self.aut_type.GetSelection() == 2:
 
             data = handle_json_data(my_data_in)
             if data == []:
