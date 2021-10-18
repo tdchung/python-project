@@ -1,23 +1,14 @@
-#!/usr/bin/python
-# -*- coding: utf8 -*-
 
-# date:    2017-08-21
-# author:  tdchung
-# mail:    tdchung.9@gmail.com
-#
-#           defaultGUI.py
-#
-# update
-# 2019-04-07          1.0           Create
-# 2019-04-21          1.1
-#
-from __future__ import print_function
 import wx
 import io
 import re
-import csv
 import os
 import time
+import serial
+from wxasync import AsyncBind, WxAsyncApp, StartCoroutine
+import asyncio
+from asyncio.events import get_event_loop
+import serial.tools.list_ports
 
 
 version = '1.0'
@@ -144,6 +135,13 @@ class MainFrame(wx.Frame):
         self.statusBar = self.CreateStatusBar(1)
         self.Centre()
         self.Show()
+
+        StartCoroutine(self.update_clock, self)
+        AsyncBind(wx.EVT_BUTTON, self.show_com_ports_event, self.show_com_ports)
+        AsyncBind(wx.EVT_BUTTON, self.on_clear, self.btn_clear)
+        AsyncBind(wx.EVT_BUTTON, self.on_cancel_btn, self.btn_cancel)
+        AsyncBind(wx.EVT_BUTTON, self.on_help_btn, self.btn_help)
+        AsyncBind(wx.EVT_BUTTON, self.on_find_gps, self.find_gps)
 
     def menu_bar_init(self):
 
@@ -338,109 +336,20 @@ class MainFrame(wx.Frame):
         vbox.Add(hbox_group_checkbox, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
         vbox.Add((-1, 5))
 
-
-        # hbox1 = wx.BoxSizer(wx.HORIZONTAL)
-        # self.sText1 = wx.StaticText(
-        #     self.panel, label='Lable 0', size=(100, 20))
-        # self.sText1.SetFont(font)
-        # self.tCtrl1 = wx.TextCtrl(self.panel)
-        # self.btn1 = wx.Button(self.panel, label='...', size=(40, 23))
-        # fgs = wx.FlexGridSizer(1, 3, 0, 0)
-        # fgs.AddMany([(self.sText1, 1, wx.ALIGN_BOTTOM),
-        #              (self.tCtrl1, 1, wx.EXPAND),
-        #              (self.btn1, 1, wx.ALIGN_BOTTOM)])
-        # fgs.AddGrowableCol(1, 1)
-        # hbox1.Add(fgs, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
-        # vbox.Add(hbox1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
-        # vbox.Add((-1, 5))
-
-        # hbox2 = wx.BoxSizer(wx.HORIZONTAL)
-        # self.sText2 = wx.StaticText(self.panel, label='Label 1', size=(100, 20))
-        # self.sText2.SetFont(font)
-        # self.tCtrl2 = wx.TextCtrl(self.panel)
-        # fgs2 = wx.FlexGridSizer(1, 2, 0, 0)
-        # fgs2.AddMany([(self.sText2, 1, wx.ALIGN_BOTTOM), (self.tCtrl2, 1, wx.EXPAND)])
-        # fgs2.AddGrowableCol(1, 1)
-        # hbox2.Add(fgs2, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
-        # vbox.Add(hbox2, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
-        # vbox.Add((-1, 5))
-
-        # hbox2 = wx.BoxSizer(wx.HORIZONTAL)
-        # self.sText2 = wx.StaticText(
-        #     self.panel, label='Label 1', size=(100, 20))
-        # self.sText2.SetFont(font)
-        # self.tCtrl2 = wx.TextCtrl(self.panel)
-        # self.bnt_openfile = wx.Button(self.panel, label='...', size=(40, 23))
-        # fgs2 = wx.FlexGridSizer(1, 3, 0, 0)
-        # fgs2.AddMany([(self.sText2, 1, wx.ALIGN_BOTTOM), (self.tCtrl2, 1, wx.EXPAND),
-        #               (self.bnt_openfile, 1, wx.ALIGN_BOTTOM)])
-        # fgs2.AddGrowableCol(1, 1)
-        # hbox2.Add(fgs2, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
-        # vbox.Add(hbox2, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
-        # vbox.Add((-1, 5))
-        #
-        # hbox3 = wx.BoxSizer(wx.HORIZONTAL)
-        # self.sText3 = wx.StaticText(self.panel, label='Label 2', size=(100, 20))
-        # self.sText3.SetFont(font)
-        # self.tCtrl3 = wx.TextCtrl(self.panel)
-        # fgs3 = wx.FlexGridSizer(1, 2, 0, 0)
-        # fgs3.AddMany([(self.sText3, 1, wx.ALIGN_BOTTOM), (self.tCtrl3, 1, wx.EXPAND)])
-        # fgs3.AddGrowableCol(1, 1)
-        # hbox3.Add(fgs3, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
-        # vbox.Add(hbox3, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
-        # vbox.Add((-1, 5))
-
-        # hbox4 = wx.BoxSizer(wx.HORIZONTAL)
-        # self.sText4 = wx.StaticText(self.panel, label='Label 3', size=(100, 20))
-        # self.sText4.SetFont(font)
-        # self.tCtrl4 = wx.TextCtrl(self.panel)
-        # fgs4 = wx.FlexGridSizer(1, 2, 0, 0)
-        # fgs4.AddMany([(self.sText4, 1, wx.ALIGN_BOTTOM), (self.tCtrl4, 1, wx.EXPAND)])
-        # fgs4.AddGrowableCol(1, 1)
-        # hbox4.Add(fgs4, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
-        # vbox.Add(hbox4, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=2)
-        # vbox.Add((-1, 5))
-
         hbox6 = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_cancel = wx.Button(self.panel, label='Cancel', size=(70, 30))
         self.btn_help = wx.Button(self.panel, label='Help', size=(70, 30))
-        # self.btn4 = wx.Button(self.panel, label='Bnt4-CSV', size=(70, 30))
+        self.btn_clear = wx.Button(self.panel, label='Clear', size=(70, 30))
         gs = wx.GridSizer(1, 5, 5, 5)
-        gs.Add(self.btn_cancel, 0, wx.EXPAND)
         gs.Add(self.btn_help, 0, wx.EXPAND)
-        # gs.Add(self.btn4, 0, wx.EXPAND)
+        gs.Add(self.btn_cancel, 0, wx.EXPAND)
+        gs.Add(self.btn_clear, 0, wx.EXPAND)
         # gs.Add(self.cblistSelect, 0, wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM)
         # gs.Add(self.cblistResult, 0, wx.LEFT | wx.RIGHT | wx.TOP | wx.ALIGN_BOTTOM)
         hbox6.Add(gs, proportion=1, flag=wx.ALL | wx.EXPAND, border=2)
         # vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT |
         #          wx.TOP | wx.ALIGN_BOTTOM, border=2)
         vbox.Add(hbox6, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP , border=2)
-        vbox.Add((-1, 5))
-
-        # hbox_comboBox = wx.BoxSizer(wx.HORIZONTAL)
-        # self.listSelect = ['PASSED', 'FAILED',
-        #                    'NO RUN', 'N/A', 'BLOCKED', 'ALL']
-        # self.listResult = ['FULL', 'Result Only', 'Excel tests', 'Time']
-        # self.cblistSelect = wx.ComboBox(self.panel,
-        #                                 choices=self.listSelect,
-        #                                 value=self.listSelect[-1],
-        #                                 size=(100, 25),
-        #                                 style=wx.CB_READONLY)
-        # self.cblistResult = wx.ComboBox(self.panel,
-        #                                 choices=self.listResult,
-        #                                 value=self.listResult[0],
-        #                                 size=(100, 25),
-        #                                 style=wx.CB_READONLY)
-        # gs_comboBox = wx.GridSizer(1, 8, 5, 5)
-        # gs_comboBox.Add(self.cblistSelect, 0, wx.LEFT | wx.RIGHT | wx.TOP |
-        #                 wx.ALIGN_BOTTOM | wx.EXPAND)
-        # gs_comboBox.Add(self.cblistResult, 0, wx.LEFT | wx.RIGHT | wx.TOP |
-        #                 wx.ALIGN_BOTTOM | wx.EXPAND)
-        # hbox_comboBox.Add(gs_comboBox, proportion=1,
-        #                   flag=wx.ALL | wx.EXPAND, border=2)
-        # # vbox.Add(hbox_comboBox, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP |
-        # #          wx.ALIGN_BOTTOM | wx.EXPAND, border=2)
-        # vbox.Add(hbox_comboBox, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.EXPAND, border=2)
         vbox.Add((-1, 5))
 
         vbox.Add(wx.StaticLine(self.panel), 0, wx.ALL | wx.EXPAND, 0)
@@ -473,7 +382,7 @@ class MainFrame(wx.Frame):
     def on_save(self, evt):
         pass
 
-    def on_clear(self, evt):
+    async def on_clear(self, evt):
         self.tCtrl7.Clear()
         pass
 
@@ -489,31 +398,33 @@ class MainFrame(wx.Frame):
         else:
             return 0
 
-    def btn1_event(self, evt):
+    async def update_clock(self):
+        while True:
+            print(time.strftime('%H:%M:%S'))
+            await asyncio.sleep(0.5)
+
+    async def show_com_ports_event(self, evt):
+        list_comports = [comport.device for comport in serial.tools.list_ports.comports()]
+        self.tCtrl7.WriteText(f'Total COM ports detected: {len(list_comports)}\r\n\r\n')
+        for port in list_comports:
+            self.tCtrl7.WriteText(f'    {port}\n')
         pass
 
-    def btn_openfile_event(self, evt):
+    async def on_cancel_btn(self, evt):
         pass
 
-    def btn2_event(self, evt):
+    async def on_help_btn(self, evt):
         pass
 
-    # open excel file
-    def btn3_event(self, evt):
-        pass
-
-    def btn4_event(self, evt):
-        pass
-
-    def cblistSelect_event(self, evt):
-        # TODO: ---------------
-        self.MyPrint.debug("Combo Box event received")
-
-    def cblistResult_event(self, evt):
+    async def on_find_gps(self, evt):
+        list_comports = [comport.device for comport in serial.tools.list_ports.comports()]
         pass
 
 
 if __name__ == '__main__':
-    app = wx.App()
-    MainFrame(None)
-    app.MainLoop()
+    app = WxAsyncApp()
+    frame = MainFrame(None)
+    frame.Show()
+    app.SetTopWindow(frame)
+    loop = get_event_loop()
+    loop.run_until_complete(app.MainLoop())

@@ -1,0 +1,4 @@
+wxpython
+wxasync
+asyncio
+pyserial
